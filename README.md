@@ -53,7 +53,7 @@ Use Engagements to track actions such as product views, button clicks, page view
 
 Example
 
-**Relay42Pixel.shared.trackEngagement(
+Relay42Pixel.shared.trackEngagement(
     uuid: "522a5323-b3ff-44df-8624-a22edf8d2800",
     type: "ProductView",
     properties: [
@@ -67,7 +67,7 @@ Example
     case .failure(let error):
         print("Engagement failed:", error)
     }
-}**
+}
 
 What the SDK generates
 
@@ -91,7 +91,7 @@ Use Facts to store longer-lived profile attributes — e.g. last viewed products
 
 Example
 
-**Relay42Pixel.shared.trackFact(
+Relay42Pixel.shared.trackFact(
     uuid: "30154a8e-67ec-4437-8fde-d673c93090b5",
     type: "LastProduct",
     ttlSeconds: 157784630,   // ~5 years
@@ -106,7 +106,7 @@ Example
     case .failure(let error):
         print("Fact failed:", error)
     }
-}**
+}
 
 What the SDK generates
 
@@ -137,7 +137,7 @@ This is typically used for:
 
 Example
 
-**Relay42Pixel.shared.syncMapping(
+Relay42Pixel.shared.syncMapping(
     uuid: "30154a8e-67ec-4437-8fde-d673c93090b5",
     profileId: "123456789",
     partnerId: "2001",     // optional if set in config
@@ -149,7 +149,7 @@ Example
     case .failure(let error):
         print("Mapping failed:", error)
     }
-}**
+}
 
 What the SDK generates
 
