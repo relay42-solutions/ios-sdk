@@ -188,6 +188,7 @@ public final class Relay42Pixel {
             URLQueryItem(name: "ca_site", value: config.siteId),
             URLQueryItem(name: "ca_partner", value: actualPartnerId),
             URLQueryItem(name: "ca_cookie", value: uuid),
+            URLQueryItem(name: "ca_read", value: "pid"), 
             URLQueryItem(name: "pid", value: profileId),
             URLQueryItem(name: "cb", value: cachebuster),
             URLQueryItem(name: "ca_merge", value: merge ? "1" : "0")
