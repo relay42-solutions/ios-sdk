@@ -27,7 +27,7 @@ public struct Relay42PixelConfig {
 
 // MARK: - Errors
 
-public enum Relay42PixelError: Error {
+public enum Relay42PixelError: Error, Equatable {
     case notConfigured
     case invalidURL
     case httpStatus(Int)
@@ -188,10 +188,10 @@ public final class Relay42Pixel {
             URLQueryItem(name: "ca_site", value: config.siteId),
             URLQueryItem(name: "ca_partner", value: actualPartnerId),
             URLQueryItem(name: "ca_cookie", value: uuid),
-            URLQueryItem(name: "ca_read", value: "pid"), 
+            URLQueryItem(name: "ca_read", value: "pid"),
             URLQueryItem(name: "pid", value: profileId),
-            URLQueryItem(name: "cb", value: cachebuster),
-            URLQueryItem(name: "ca_merge", value: merge ? "1" : "0")
+            URLQueryItem(name: "ca_merge", value: merge ? "1" : "0"),
+            URLQueryItem(name: "cb", value: cachebuster)
         ]
 
         sendPixelRequest(
@@ -231,25 +231,41 @@ public final class Relay42Pixel {
             return
         }
 
+        // Log the full request URL for debugging
+        print("📤 Relay42 Request: \(url.absoluteString)")
+
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
 
-        let task = session.dataTask(with: request) { _, response, error in
+        let task = session.dataTask(with: request) { data, response, error in
             if let error = error {
+                print("❌ Relay42 Network Error: \(error.localizedDescription)")
                 completion?(.failure(error))
                 return
             }
 
             guard let httpResponse = response as? HTTPURLResponse else {
+                print("❌ Relay42 Invalid Response")
                 completion?(.failure(Relay42PixelError.unknown))
                 return
             }
 
+            print("📥 Relay42 Response: HTTP \(httpResponse.statusCode)")
+
+            // Log response body for debugging errors
+            if let data = data, !data.isEmpty, httpResponse.statusCode >= 400 {
+                if let responseBody = String(data: data, encoding: .utf8) {
+                    print("📄 Response Body: \(responseBody)")
+                }
+            }
+
             guard (200..<300).contains(httpResponse.statusCode) else {
+                print("❌ Relay42 HTTP Error: \(httpResponse.statusCode)")
                 completion?(.failure(Relay42PixelError.httpStatus(httpResponse.statusCode)))
                 return
             }
 
+            print("✅ Relay42 Success")
             completion?(.success(()))
         }
 

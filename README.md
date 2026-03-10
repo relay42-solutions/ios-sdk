@@ -157,9 +157,10 @@ https://t.svtrd.com/syncResponse?
     ca_site=<siteId>
     &ca_partner=2001
     &ca_cookie=<uuid>
+    &ca_read=pid
     &pid=123456789
-    &cb=<timestamp>
     &ca_merge=1
+    &cb=<timestamp>
 
 🔎 Summary of When to Use Each Call
 

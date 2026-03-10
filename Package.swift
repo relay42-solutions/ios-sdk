@@ -4,23 +4,23 @@ import PackageDescription
 let package = Package(
     name: "Relay42TrackingSwiftSDK",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v12)
     ],
     products: [
         .library(
             name: "Relay42TrackingSwiftSDK",
-            targets: ["Relay42TrackingSwiftSDK"]
+            targets: ["SwiftRelay42SDK"]
         ),
     ],
     targets: [
         .target(
-            name: "Relay42TrackingSwiftSDK",
-            path: "Sources"
+            name: "SwiftRelay42SDK",
+            path: "Sources/SwiftRelay42SDK"
         ),
         .testTarget(
             name: "Relay42TrackingSwiftSDKTests",
-            dependencies: ["Relay42TrackingSwiftSDK"],
-            path: "Tests"
+            dependencies: ["SwiftRelay42SDK"],
+            path: "Tests/SwiftRelay42SDKTests"
         ),
     ]
 )
